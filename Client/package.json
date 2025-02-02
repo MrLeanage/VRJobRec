@@ -20,6 +20,7 @@
     "@mui/material": "5.12.3",
     "chart.js": "4.3.0",
     "chroma-js": "2.4.2",
+    "firebase": "^11.2.0",
     "material-dashboard-2-react": "file:",
     "prop-types": "15.8.1",
     "react": "18.2.0",
@@ -27,11 +28,11 @@
     "react-dom": "18.2.0",
     "react-github-btn": "1.4.0",
     "react-router-dom": "6.11.0",
-    "react-scripts": "^3.0.1",
+    "react-scripts": "^5.0.1",
     "react-table": "7.8.0",
     "react-webcam": "^7.2.0",
     "stylis": "4.1.4",
-    "stylis-plugin-rtl": "2.1.1",
+    "stylis-plugin-rtl": "^2.1.1",
     "yup": "1.1.1"
   },
   "scripts": {
@@ -40,12 +41,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -60,15 +55,14 @@
     ]
   },
   "devDependencies": {
+    "@eslint/js": "^9.19.0",
     "ajv": "^7.2.4",
-    "eslint": "8.39.0",
-    "eslint-config-prettier": "8.8.0",
-    "eslint-plugin-import": "2.27.5",
-    "eslint-plugin-jsx-a11y": "6.7.1",
-    "eslint-plugin-prettier": "4.2.1",
-    "eslint-plugin-react": "7.32.2",
-    "eslint-plugin-react-hooks": "4.6.0",
-    "prettier": "2.8.8"
+    "eslint": "^9.19.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-react": "^7.37.4",
+    "globals": "^15.14.0",
+    "prettier": "^3.4.2"
   },
   "overrides": {
     "svgo": "3.0.2"

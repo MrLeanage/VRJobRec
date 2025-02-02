@@ -1,39 +1,16 @@
-/**
-=========================================================
-* JobRecVR React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
-import Card from "@mui/material/Card";
-
-// JobRecVR React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-
-// Billing page components
-import Bill from "layouts/Quiz/components/Bill";
-import Webcam from "react-webcam";
-import { useNavigate } from "react-router-dom";
 import React, { useState, useRef } from "react";
+import Webcam from "react-webcam";
+import "./BillingInformation.css"; // Import the CSS file
 
 function BillingInformation() {
-  const navigate = useNavigate();
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [recordedVideo, setRecordedVideo] = useState(null);
+  const [teamsLink, setTeamsLink] = useState(""); // State to store the Teams link/ID
   const webcamRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const [chunks, setChunks] = useState([]);
+
   const handleStartRecording = () => {
     setIsRecording(true);
     setChunks([]);
@@ -67,55 +44,68 @@ function BillingInformation() {
     a.download = "recorded-video.webm";
     a.click();
   };
-  return (
-    <Card id="delete-account">
-      <MDBox pt={3} px={2}>
-        <MDTypography variant="h6" fontWeight="medium">
-          Start Your VR Test
-        </MDTypography>
-      </MDBox>
-      <MDBox pt={1} pb={2} px={2}>
-        {/* Camera or Recording Section */}
-        <div className="bg-slate-800 p-6 rounded-lg shadow-lg">
-          {!isCameraOpen && (
-            <button
-              onClick={() => setIsCameraOpen(true)}
-              className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-md transition"
-            >
-              Open Camera
-            </button>
-          )}
 
-          {isCameraOpen && (
-            <div className="camera-container mt-4">
-              <Webcam
-                ref={webcamRef}
-                audio={true}
-                className="w-full h-96 rounded-lg border border-gray-600"
-                screenshotFormat="image/jpeg"
-              />
-              {!isRecording ? (
-                <button
-                  onClick={handleStartRecording}
-                  className="mt-4 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-md transition"
-                >
-                  Start Recording
-                </button>
-              ) : (
-                <button onClick={handleStopRecording}> Stop Recording </button>
-              )}
-            </div>
-          )}
-          {recordedVideo && (
-            <div>
-              <h3>Recorded Video</h3>
-              <video src={recordedVideo} />
-              <button onClick={handleSaveVideo}> Save Video </button>
-            </div>
-          )}
-        </div>
-      </MDBox>
-    </Card>
+  // Function to join the Teams meeting
+  const handleJoinTeamsMeet = () => {
+    if (teamsLink) {
+      window.open(teamsLink, "_blank"); // Opens the Teams meeting link in a new tab
+    } else {
+      alert("Please enter a valid Teams meeting link or ID.");
+    }
+  };
+
+  return (
+    <div className="billing-container">
+      <h2 className="billing-header">Start Your VR Test</h2>
+      <div>
+        {/* Camera or Recording Section */}
+        {!isCameraOpen && (
+          <button onClick={() => setIsCameraOpen(true)} className="camera-button">
+            Open Camera
+          </button>
+        )}
+
+        {isCameraOpen && (
+          <div className="camera-container">
+            <Webcam ref={webcamRef} audio={true} className="webcam" screenshotFormat="image/jpeg" />
+            {!isRecording ? (
+              <button onClick={handleStartRecording} className="record-button">
+                Start Recording
+              </button>
+            ) : (
+              <button onClick={handleStopRecording} className="record-button">
+                Stop Recording
+              </button>
+            )}
+          </div>
+        )}
+
+        {recordedVideo && (
+          <div className="video-container">
+            <h3 className="video-header">Recorded Video</h3>
+            <video src={recordedVideo} controls className="video" />
+            <button onClick={handleSaveVideo} className="save-button">
+              Save Video
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Teams Meeting Section */}
+      <div className="teams-section">
+        <h2 className="teams-header">Join a Microsoft Teams Meeting</h2>
+        <input
+          type="text"
+          value={teamsLink}
+          onChange={(e) => setTeamsLink(e.target.value)}
+          placeholder="Enter Teams meeting link or ID"
+          className="teams-input"
+        />
+        <button onClick={handleJoinTeamsMeet} className="join-button">
+          Join Meet
+        </button>
+      </div>
+    </div>
   );
 }
 
